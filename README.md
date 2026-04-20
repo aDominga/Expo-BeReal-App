@@ -11,6 +11,9 @@ This application is a photo-sharing application that you can use among your frie
 - **TypeScript** - Type safety
 - **Supabase** - Backend, authentication, and storage
 - **Expo Router** - File-based navigation
+- **React Navigation** - Tab and stack navigation
+- **Reanimated** - Animations
+- **Gesture Handler** - Touch and gesture support
 
 ---
 
