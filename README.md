@@ -1,10 +1,10 @@
-# Welcome to my Expo App
+# Welcome to my Expo App ⚛
 
 This application is a photo-sharing application that you can use among your friends.
 
 ---
 
-## Tech Stack
+## Tech Stack 💻
 
 - **React Native** - Mobile framework
 - **Expo** - Development platform
@@ -17,7 +17,7 @@ This application is a photo-sharing application that you can use among your frie
 
 ---
 
-## Requirements
+## Requirements ⚠️
 
 To run this application, you will need to have installed:
 
@@ -26,7 +26,7 @@ To run this application, you will need to have installed:
 
 ---
 
-## Getting Started
+## Getting Started 
 
 **1. Install Dependencies**
 
@@ -46,7 +46,7 @@ npx expo run:ios
 
 ---
 
-## Disclaimer
+## Disclaimer ‼️
 
 This application is optimized for iOS and is currently built on an SDK version
 not yet supported by Expo Go. It is recommended to use the iOS Simulator to run
