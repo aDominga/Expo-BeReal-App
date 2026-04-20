@@ -34,7 +34,11 @@ To run this application, you will need to have installed:
 npm install
 ```
 
-**2. Run the app**
+**2. Set up environment variables**
+
+Create a `.env` file in the root directory and add your Supabase credentials:
+
+**3. Run the app**
 
 ```bash
 npx expo run:ios
