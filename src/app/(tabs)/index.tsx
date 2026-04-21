@@ -133,7 +133,7 @@ const takePhoto = async () => {
 }
 
   const showImagePicker = () => {
-    Alert.alert("Select Profile Image", "Choose an option",[
+    Alert.alert("Select New Image", "Choose an option",[
     {text: "Camera", onPress: takePhoto },
     {text: "Photo Library", onPress: pickImage},
     {text: "Cancel", style:"cancel"},
