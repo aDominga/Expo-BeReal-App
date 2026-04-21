@@ -15,8 +15,7 @@ if (fs.existsSync(envLocalPath)) {
 }
 
 const supabaseUrl =
-  process.env.EXPO_PUBLIC_SUPABASE_URL ||
-  "https://fnnhciiooxgvffbdbwxr.supabase.co";
+  process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 if (!supabaseServiceKey) {
