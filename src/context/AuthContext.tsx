@@ -132,15 +132,23 @@ export const AuthProvider = ({children}: {children:ReactNode}) => {
         try { 
             const updateData: any = {};
 
-            if (userData.name !== undefined) updateData.name = userData.name;
+            if (userData.name !== undefined) 
+                updateData.name = userData.name;
+
+
             if (userData.username !== undefined)
                 updateData.username = userData.username;
+
+
             if (userData.profileImage !== undefined)
                 updateData.profile_image_url = userData.profileImage;
+
+
             if (userData.onboardingCompleted !== undefined)
                 updateData.onboarding_completed = userData.onboardingCompleted;
 
 
+                
             const {error, data} = await supabase.from("profiles").update(updateData).eq("id", user.id).select().single();
             if (error) throw error;
 

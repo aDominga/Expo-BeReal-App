@@ -14,7 +14,7 @@ export default function SignUpScreen() {
     const [username, setUsername] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [profileImage, setProfileImage] = useState<string | null>(null);
-    const {user, updateUser} =useAuth();
+    const {user, updateUser} = useAuth();
     const router = useRouter();
 
 

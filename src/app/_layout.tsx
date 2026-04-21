@@ -13,15 +13,26 @@ function RouteGuard() {
 
   useEffect(() => {
     if (isLoading) return;
-    if(!user){
-      if(!inAuthGroup){
+    if (!user) {
+      if (!inAuthGroup) {
         router.replace("/(auth)/login");
       }
-     } else { if (!inTabsGroup){
+
+    } else if (!user.onboardingCompleted && !user.name && !user.username) {
+      if (segments.join("/") !== "(auth)/onboarding") {
+        router.replace("/(auth)/onboarding");
+      }
+    } else if (!user.onboardingCompleted) {
+        if (segments.join("/") !== "(auth)/editProfile") {
+          router.replace("/(auth)/editProfile");
+        }
+    } else {
+      if (!inTabsGroup) {
         router.replace("/(tabs)");
       }
     }
-}, [user, segments, router]);
+  }, [user, segments, router]);
+
   
 
 if(isLoading){

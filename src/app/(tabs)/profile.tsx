@@ -9,131 +9,138 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function Profile() {
-  const {user, updateUser, signOut} = useAuth();
-  const [isUpdating, setIsUpdating] = useState(false); 
+  const { user, updateUser, signOut } = useAuth();
+  const [isUpdating, setIsUpdating] = useState(false);
   const router = useRouter();
 
   const handleUpdateProfileImage = async () => {
     if (!user) return;
-    const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
-        Alert.alert("Premission needed", "We need camera roll permissions to select a profile image");
-        return;
+      Alert.alert("Premission needed", "We need camera roll permissions to select a profile image");
+      return;
     }
     const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images"],
-        allowsEditing: true,
-        aspect: [1,1],
-        quality: 0.8,
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
     });
-    if (!result.canceled && result.assets[0]){
+    if (!result.canceled && result.assets[0]) {
       setIsUpdating(true);
       try {
         const imageUrl = await uploadProfileImage(user.id, result.assets[0].uri);
 
-        await updateUser({profileImage: imageUrl});
+        await updateUser({ profileImage: imageUrl });
         Alert.alert("Success", "Successfully Updated Profile Image");
-        } catch (error) {
-          console.error("Error updating profile image:", error);
-          Alert.alert("Error", "Failed to update profile image. Please try again.");
+      } catch (error) {
+        console.error("Error updating profile image:", error);
+        Alert.alert("Error", "Failed to update profile image. Please try again.");
       } finally {
         setIsUpdating(false);
       }
     }
   };
 
+
+  const handleEditProfile = async () => {
+    if (!user) return;
+    user.onboardingCompleted = false;
+    router.push("/(auth)/editProfile");
+  };
+
   const handleSignOut = async () => {
     Alert.alert("Sign out", "Are you sure you want to sign out?",
-    [
-      {
-      text:"Cancel", 
-      style:"cancel",
-    },
-    {
-      text:"Sign Out",
-      style:"destructive",
-      onPress: async () => {
-        await signOut();
-        router.replace("/(auth)/login");
-      },
-    },
-  
-  ]);
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Sign Out",
+          style: "destructive",
+          onPress: async () => {
+            await signOut();
+            router.replace("/(auth)/login");
+          },
+        },
+
+      ]);
   };
 
   return (
- 
+
     <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
       <ScrollView contentContainerStyle={styles.content}>
-      <View style={styles.profileSection}>
-        <TouchableOpacity onPress={handleUpdateProfileImage} disabled={isUpdating}>
-          <View>
-        {user?.profileImage ? (<Image source={{uri: user.profileImage}} style={styles.profileImage} cachePolicy={"none"} />
-        ) : (
-        <View style={[styles.profileImage, styles.profileImagePlaceholder]}> 
-          <Text style={styles.profileImageText}>
-            {user?.name?.[0]?.toUpperCase() || "U"}
-          </Text>
+        <View style={styles.profileSection}>
+          <TouchableOpacity onPress={handleUpdateProfileImage} disabled={isUpdating}>
+            <View>
+              {user?.profileImage ? (<Image source={{ uri: user.profileImage }} style={styles.profileImage} cachePolicy={"none"} />
+              ) : (
+                <View style={[styles.profileImage, styles.profileImagePlaceholder]}>
+                  <Text style={styles.profileImageText}>
+                    {user?.name?.[0]?.toUpperCase() || "U"}
+                  </Text>
+                </View>
+              )}
+
+              <View style={styles.editBadge}>
+                <Text style={styles.editBadgeText}>Edit</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.name}> {user?.name || "No Name"}</Text>
+          <Text style={styles.username}>@{user?.username || "User"}</Text>
+          <Text style={styles.email}>{user?.email}</Text>
         </View>
-      )}
 
-      <View style={styles.editBadge}>
-        <Text style={styles.editBadgeText}>Edit</Text>
-      </View>
-      </View>
-        </TouchableOpacity>
-        <Text style={styles.name}>{user?.name || "No Name"}</Text>
-        <Text style={styles.username}>@{user?.username || "User"}</Text>
-        <Text style={styles.email}>{user?.email}</Text>
-      </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Account</Text>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Account</Text>
+          <TouchableOpacity style={styles.settingItem} onPress={handleEditProfile}>
+            <TouchableOpacity><Text style={styles.settingLabel}>Edit Profile</Text></TouchableOpacity>
+            <Text style={styles.settingValue}>→</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem}>
-          <Text style={styles.settingLabel}>Edit Profile</Text>
-          <Text style={styles.settingValue}>→</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.settingItem}>
-          <Text style={styles.settingLabel}>Notifications</Text>
-          <Text style={styles.settingValue}>→</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.settingItem}>
+            <Text style={styles.settingLabel}>Notifications</Text>
+            <Text style={styles.settingValue}>→</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem}>
-          <Text style={styles.settingLabel}>Privacy</Text>
-          <Text style={styles.settingValue}>→</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.settingItem}>
+            <Text style={styles.settingLabel}>Privacy</Text>
+            <Text style={styles.settingValue}>→</Text>
+          </TouchableOpacity>
 
-        <Text style={styles.sectionTitle}>About</Text>
+          <Text style={styles.sectionTitle}>About</Text>
 
-        <TouchableOpacity style={styles.settingItem}>
-          <Text style={styles.settingLabel}>Help and Support</Text>
-          <Text style={styles.settingValue}>→</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.settingItem}>
+            <Text style={styles.settingLabel}>Help and Support</Text>
+            <Text style={styles.settingValue}>→</Text>
+          </TouchableOpacity>
 
 
-        <TouchableOpacity style={styles.settingItem}>
-          <Text style={styles.settingLabel}>Terms of Service</Text>
-          <Text style={styles.settingValue}>→</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.settingItem}>
+            <Text style={styles.settingLabel}>Terms of Service</Text>
+            <Text style={styles.settingValue}>→</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem}>
-          <Text style={styles.settingLabel}>Privacy Policy</Text>
-          <Text style={styles.settingValue}>→</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styles.settingItem}>
+            <Text style={styles.settingLabel}>Privacy Policy</Text>
+            <Text style={styles.settingValue}>→</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.section}>
           <TouchableOpacity style={[styles.settingItem, styles.signOutButton]} onPress={handleSignOut} >
-          <Text style={styles.signOutText}>Sign Out</Text>
+            <Text style={styles.signOutText}>Sign Out</Text>
           </TouchableOpacity>
         </View>
 
       </ScrollView>
-    </SafeAreaView> 
-  
-    
+    </SafeAreaView>
+
+
   );
 }
 
@@ -248,5 +255,5 @@ const styles = StyleSheet.create({
   },
 
 
-  
+
 });
