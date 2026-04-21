@@ -72,65 +72,38 @@ export default function Profile() {
 
     <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.profileSection}>
-          <TouchableOpacity onPress={handleUpdateProfileImage} disabled={isUpdating}>
-            <View>
-              {user?.profileImage ? (<Image source={{ uri: user.profileImage }} style={styles.profileImage} cachePolicy={"none"} />
-              ) : (
-                <View style={[styles.profileImage, styles.profileImagePlaceholder]}>
-                  <Text style={styles.profileImageText}>
-                    {user?.name?.[0]?.toUpperCase() || "U"}
-                  </Text>
+        <View>
+          <View style={styles.profileSection}>
+            <TouchableOpacity onPress={handleUpdateProfileImage} disabled={isUpdating}>
+              <View>
+                {user?.profileImage ? (<Image source={{ uri: user.profileImage }} style={styles.profileImage} cachePolicy={"none"} />
+                ) : (
+                  <View style={[styles.profileImage, styles.profileImagePlaceholder]}>
+                    <Text style={styles.profileImageText}>
+                      {user?.name?.[0]?.toUpperCase() || "U"}
+                    </Text>
+                  </View>
+                )}
+
+                <View style={styles.editBadge}>
+                  <Text style={styles.editBadgeText}>Edit</Text>
                 </View>
-              )}
-
-              <View style={styles.editBadge}>
-                <Text style={styles.editBadgeText}>Edit</Text>
               </View>
-            </View>
-          </TouchableOpacity>
-          <Text style={styles.name}> {user?.name || "No Name"}</Text>
-          <Text style={styles.username}>@{user?.username || "User"}</Text>
-          <Text style={styles.email}>{user?.email}</Text>
+            </TouchableOpacity>
+            <Text style={styles.name}> {user?.name || "No Name"}</Text>
+            <Text style={styles.username}>@{user?.username || "User"}</Text>
+            <Text style={styles.email}>{user?.email}</Text>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Account</Text>
+
+            <TouchableOpacity style={styles.settingItem} onPress={handleEditProfile}>
+              <TouchableOpacity><Text style={styles.settingLabel}>Edit Profile</Text></TouchableOpacity>
+              <Text style={styles.settingValue}>→</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Account</Text>
-
-          <TouchableOpacity style={styles.settingItem} onPress={handleEditProfile}>
-            <TouchableOpacity><Text style={styles.settingLabel}>Edit Profile</Text></TouchableOpacity>
-            <Text style={styles.settingValue}>→</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Notifications</Text>
-            <Text style={styles.settingValue}>→</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Privacy</Text>
-            <Text style={styles.settingValue}>→</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.sectionTitle}>About</Text>
-
-          <TouchableOpacity style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Help and Support</Text>
-            <Text style={styles.settingValue}>→</Text>
-          </TouchableOpacity>
-
-
-          <TouchableOpacity style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Terms of Service</Text>
-            <Text style={styles.settingValue}>→</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingItem}>
-            <Text style={styles.settingLabel}>Privacy Policy</Text>
-            <Text style={styles.settingValue}>→</Text>
-          </TouchableOpacity>
-        </View>
-
         <View style={styles.section}>
           <TouchableOpacity style={[styles.settingItem, styles.signOutButton]} onPress={handleSignOut} >
             <Text style={styles.signOutText}>Sign Out</Text>
@@ -151,6 +124,8 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 32,
+    flexGrow: 1,
+    justifyContent: "space-between",
   },
   profileSection: {
     alignItems: "center",
@@ -206,7 +181,6 @@ const styles = StyleSheet.create({
     color: "#999",
   },
   section: {
-    marginBottom: 32,
   },
   sectionTitle: {
     fontSize: 18,

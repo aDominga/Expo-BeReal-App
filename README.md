@@ -53,5 +53,6 @@ not yet supported by Expo Go. It is recommended to use the iOS Simulator to run
 this application locally.
 
 This project was developed solely for educational purposes as part of my journey
-learning mobile development. It is not affiliated with, endorsed by, or associated
+to expand my knowledge on mobile development. It is not affiliated with, endorsed by, or associated
 with BeReal in any way.
+
